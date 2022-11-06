@@ -9,4 +9,5 @@ export class LocationDataServer extends HttpClient<Location>{
         super();
         
     }
+    
 }

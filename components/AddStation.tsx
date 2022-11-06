@@ -19,14 +19,17 @@ import { BsCheck2, BsPlus, BsX } from "react-icons/bs";
 import { Draggable, Map, Marker } from "pigeon-maps";
 import { StationDataServer } from "../classes/StationDataServer";
 import { LocationDataServer } from "../classes/LocationDataServer";
+import { Station } from "../classes/Station";
 
 interface AddStationProps {
   initialLocation: {
     lon: number;
     lat: number;
   };
+  stations:Station[],
+  setStations:React.Dispatch<React.SetStateAction<Array<Station>>>
 }
-const AddStation: React.FC<AddStationProps> = ({ initialLocation }) => {
+const AddStation: React.FC<AddStationProps> = ({ initialLocation,setStations,stations }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [anchor, setAnchor] = useState([
     initialLocation.lat,
@@ -38,7 +41,7 @@ const AddStation: React.FC<AddStationProps> = ({ initialLocation }) => {
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
   const [locationID, setlocationID] = useState("");
-  console.log(locationID)
+
   const stationDataServer = new StationDataServer();
   const locationDataServer = new LocationDataServer();
   const handleAddLocation = async (latitude:number,longitude:number) => {
@@ -49,12 +52,18 @@ const AddStation: React.FC<AddStationProps> = ({ initialLocation }) => {
     
     
   }
-  const submitHandler = async (event:React.FormEvent<HTMLFormElement>, label:string,locationId:string ) => {
+  const submitHandler = async (event:React.FormEvent<HTMLFormElement>, label:string,lon:number,lat:number ) => {
     event.preventDefault();
-    const data = await stationDataServer.post("station",{
+    const data = await stationDataServer.postWithLocation("station/with-location",{
         label:label,
-        locationId:locationId
+        location:{
+            create:{
+                latitude:lat,
+                longitude:lon
+            }
+        }
     })
+    setStations([...stations,data]);
     console.log(data)
   }
   return (
@@ -75,7 +84,7 @@ const AddStation: React.FC<AddStationProps> = ({ initialLocation }) => {
         onClose={onClose}
       >
         <ModalOverlay />
-        <form onSubmit={(e)=>submitHandler(e,label,locationID)}>
+        <form onSubmit={(e)=>submitHandler(e,label,finalLocation[0],finalLocation[1])}>
         <ModalContent>
           <ModalHeader>Add Station</ModalHeader>
           <ModalCloseButton />

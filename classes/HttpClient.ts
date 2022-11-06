@@ -4,7 +4,7 @@ import { APIURL } from "../APIURL";
 export class HttpClient<T> {
     private data!: T | T[] ;
     private error!: Error;
-    private url : string;
+    protected url : string;
     /**
      *
      */

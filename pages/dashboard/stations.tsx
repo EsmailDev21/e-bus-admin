@@ -36,7 +36,7 @@ const stations = () => {
     <Layout>
         
         <Stack direction={"column"} spacing={5}>
-        <AddStation initialLocation={{lat:33.346326,lon:10.490181}} />
+        <AddStation stations={stations} setStations={setStations} initialLocation={{lat:33.346326,lon:10.490181}} />
         <Divider />
         <StationTable stations={stations} setStations={setStations}  />
         </Stack>

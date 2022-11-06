@@ -8,14 +8,16 @@ import { CustomerDataServer } from '../../classes/CustomerDataServer'
 import { Line } from '../../classes/Line'
 import LineTable from '../../components/LineTable'
 import { LineDataServer } from '../../classes/LineDataServer'
-const lines = ({data}:any) => {
-   const [users, setusers] = React.useState<Line[]>([])
-   /* const customerDataServer = new CustomerDataServer(); 
+import AddLine from '../../components/AddLine'
+import { Stack, Divider } from '@chakra-ui/react'
+const lines = () => {
+   const [lines, setLines] = React.useState<Line[]>([])
+    const lineDataServer = new LineDataServer(); 
     
     const getData = async () => {
-        const data : User[] = await customerDataServer.get("user");
+        const data : Line[] = await lineDataServer.get("line");
         console.log(data)
-        setusers(data);
+        setLines(data);
       };
     React.useEffect(() => {
       const abortController = new AbortController()
@@ -24,10 +26,14 @@ const lines = ({data}:any) => {
         abortController.abort();
       }
     }, [])
-*/
+
   return (
     <Layout>
-        <LineTable lines={data}  />
+        <Stack direction={"column"} spacing={5}>
+        <AddLine lines={lines} setLines={setLines}  />
+        <Divider />
+        <LineTable lines={lines}  />
+        </Stack>
     </Layout>
   )
 
