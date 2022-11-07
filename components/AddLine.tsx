@@ -24,20 +24,45 @@ import { Draggable, Map, Marker } from "pigeon-maps";
 import { LineDataServer } from "../classes/LineDataServer";
 import { LocationDataServer } from "../classes/LocationDataServer";
 import { Line } from "../classes/Line";
+import { StationDataServer } from "../classes/StationDataServer";
+import { Station } from "../classes/Station";
 
 interface AddLineProps {
   lines: Line[];
   setLines: React.Dispatch<React.SetStateAction<Array<Line>>>;
 }
 const AddLine: React.FC<AddLineProps> = ({ setLines, lines }) => {
+  const [station, setstation] = useState<Station[]>([])
   const { isOpen, onOpen, onClose } = useDisclosure();
-
+  const stationDataServer = new StationDataServer();
+  const lineDataServer = new LineDataServer();
+  const [selectedDepStation,setSelectedDepStation] = useState<Station>({id:"",label:"",locationId:""})
+  const [selectedArrStation,setSelectedArrStation] = useState<Station>({id:"",label:"",locationId:""})
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
   const handleAddLocation = async (latitude: number, longitude: number) => {};
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const data : Line = await lineDataServer.post("line",{
+      departureStationId : selectedDepStation.id,
+      arriveStationId : selectedArrStation.id
+    })
+    setLines([...lines,data]);
   };
+  const getData = async () => {
+    const data : Station[] = await stationDataServer.get("station");
+    console.log(data)
+    setstation(data);
+  };
+React.useEffect(() => {
+  const abortController = new AbortController();
+ getData();
+console.log(station)
+  return () => {
+    abortController.abort()
+  }
+}, [])
+
   return (
     <>
       <Button
@@ -56,7 +81,7 @@ const AddLine: React.FC<AddLineProps> = ({ setLines, lines }) => {
         onClose={onClose}
       >
         <ModalOverlay />
-        <form>
+        <form onSubmit={submitHandler}>
           <ModalContent>
             <ModalHeader>Add Line</ModalHeader>
             <ModalCloseButton />
@@ -83,13 +108,14 @@ const AddLine: React.FC<AddLineProps> = ({ setLines, lines }) => {
                         _hover={{ bg: "purple.300" }}
                         rightIcon={<BsChevronDown size={18} />}
                       >
-                        {isOpen ? "Close" : "Open"}
+                        {(selectedDepStation.id != "") ? selectedDepStation.label : "Open" }
                       </MenuButton>
-                      <MenuList>
-                        <MenuItem>Download</MenuItem>
-                        <MenuItem onClick={() => alert("Kagebunshin")}>
-                          Create a Copy
-                        </MenuItem>
+                      <MenuList id={selectedDepStation.id}>
+                        {
+                          station && station.map(
+                            (station:Station) => <MenuItem onClick={()=>setSelectedDepStation(station)}>{station.label}</MenuItem>
+                          )
+                        }
                       </MenuList>
                     </>
                   )}
@@ -108,13 +134,14 @@ const AddLine: React.FC<AddLineProps> = ({ setLines, lines }) => {
                         _hover={{ bg: "purple.300" }}
                         rightIcon={<BsChevronDown size={18} />}
                       >
-                        {isOpen ? "Close" : "Open"}
+                        {(selectedArrStation.id!="")? selectedArrStation.label :  "Open"}
                       </MenuButton>
-                      <MenuList>
-                        <MenuItem>Download</MenuItem>
-                        <MenuItem onClick={() => alert("Kagebunshin")}>
-                          Create a Copy
-                        </MenuItem>
+                      <MenuList id={selectedArrStation.id}>
+                      {
+                          station && station.map(
+                            (station:Station) => <MenuItem onClick={()=>setSelectedArrStation(station)}>{station.label}</MenuItem>
+                          )
+                        }
                       </MenuList>
                     </>
                   )}
@@ -128,6 +155,7 @@ const AddLine: React.FC<AddLineProps> = ({ setLines, lines }) => {
                 leftIcon={<BsPlus size={24} />}
                 colorScheme="purple"
                 mr={3}
+                onClick={onClose}
               >
                 Save
               </Button>

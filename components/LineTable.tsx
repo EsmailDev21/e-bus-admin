@@ -18,12 +18,14 @@ import SingleLine from "./SingleLine";
 import SingleUser from "./SingleUser";
 
 interface LineTableProps {
-  lines: Line[];
+  lines: Line[],
+  setLines : React.Dispatch<React.SetStateAction<Array<Line>>>
 }
-const LineTable: React.FC<LineTableProps> = ({ lines }) => {
+const LineTable: React.FC<LineTableProps> = ({ lines, setLines }) => {
   const lineDataServer = new LineDataServer();
   const deleteLine = async (id: string) => {
     const data = await lineDataServer.delete("line/" + id);
+    setLines(lines.filter((line:Line)=>line.id != data.id))
   };
   return (
     <TableContainer>
@@ -43,7 +45,7 @@ const LineTable: React.FC<LineTableProps> = ({ lines }) => {
             lines.map((line: Line) => (
               <SingleLine
                 deleteLine={function (id: string): void {
-                  throw new Error("Function not implemented.");
+                  deleteLine(line.id)
                 }}
                 updateLine={function (id: string): void {
                   throw new Error("Function not implemented.");

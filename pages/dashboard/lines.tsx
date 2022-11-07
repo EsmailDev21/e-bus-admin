@@ -32,7 +32,7 @@ const lines = () => {
         <Stack direction={"column"} spacing={5}>
         <AddLine lines={lines} setLines={setLines}  />
         <Divider />
-        <LineTable lines={lines}  />
+        <LineTable setLines={setLines} lines={lines}  />
         </Stack>
     </Layout>
   )

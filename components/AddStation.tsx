@@ -46,8 +46,8 @@ const AddStation: React.FC<AddStationProps> = ({ initialLocation,setStations,sta
   const locationDataServer = new LocationDataServer();
   const handleAddLocation = async (latitude:number,longitude:number) => {
     const data = await locationDataServer.post("location",{
-        latitude,
-        longitude
+        latitude:latitude,
+        longitude:longitude
     }).then(data=>setlocationID(data.id))
     
     
