@@ -110,11 +110,11 @@ const AddStation: React.FC<AddStationProps> = ({ initialLocation,setStations,sta
               >
                 <Draggable
                   offset={[60, 87]}
-                  anchor={anchor}
+                  anchor={[anchor[0],anchor[1]]}
                   onDragEnd={setAnchor}
 
                 >
-                  <Marker width={50} anchor={anchor} />
+                  <Marker width={50} anchor={[anchor[0],anchor[1]]} />
                   
                 </Draggable>
               </Map>
