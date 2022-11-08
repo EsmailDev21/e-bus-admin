@@ -84,7 +84,7 @@ const AddStation: React.FC<AddStationProps> = ({ initialLocation,setStations,sta
         onClose={onClose}
       >
         <ModalOverlay />
-        <form onSubmit={(e)=>submitHandler(e,label,finalLocation[0],finalLocation[1])}>
+        <form onSubmit={(e)=>submitHandler(e,label,finalLocation[1],finalLocation[0])}>
         <ModalContent>
           <ModalHeader>Add Station</ModalHeader>
           <ModalCloseButton />
