@@ -1,1 +1,1 @@
-export const APIURL:string = "http://localhost:4200"
+export const APIURL:string = "https://e-bus-admin.vercel.app"
