@@ -1,1 +1,1 @@
-export const APIURL:string = "https://e-bus-admin.vercel.app"
+export const APIURL:string = "https://ebus-serverside.herokuapp.com"
