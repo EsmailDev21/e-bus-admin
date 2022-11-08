@@ -34,6 +34,7 @@ interface AddLineProps {
 const AddLine: React.FC<AddLineProps> = ({ setLines, lines }) => {
   const [station, setstation] = useState<Station[]>([])
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [label, setlabel] = useState("")
   const stationDataServer = new StationDataServer();
   const lineDataServer = new LineDataServer();
   const [selectedDepStation,setSelectedDepStation] = useState<Station>({id:"",label:"",locationId:""})
@@ -44,6 +45,7 @@ const AddLine: React.FC<AddLineProps> = ({ setLines, lines }) => {
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data : Line = await lineDataServer.post("line",{
+      label:label,
       departureStationId : selectedDepStation.id,
       arriveStationId : selectedArrStation.id
     })
@@ -90,6 +92,8 @@ console.log(station)
                 <FormLabel>Label</FormLabel>
                 <Input
                   ref={initialRef}
+                  value={label}
+                  onChange={(e)=>setlabel(e.target.value)}
                   placeholder="Label..."
                   focusBorderColor="purple.400"
                 />

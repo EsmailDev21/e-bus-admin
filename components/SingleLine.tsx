@@ -16,6 +16,7 @@ interface SingleLineProps extends Line{
 }
 const SingleLine:React.FC<SingleLineProps > = ({
     id,
+    label,
     departureStationId,
     arriveStationId,
     addedOn,
@@ -67,8 +68,8 @@ const SingleLine:React.FC<SingleLineProps > = ({
     }, [arriveStationId,departureStationId])
     
   return (
-  <> <Tr>
-      <Th fontWeight={'normal'}>{id}</Th>
+  <> <Tr key={id}>
+      <Th fontWeight={'normal'}>{label}</Th>
       <Th fontWeight={'normal'}><Text>{departureStation.label}</Text></Th>
       <Th fontWeight={'normal'}><Text>{arriveStation.label}</Text></Th>
       <Th fontWeight={'normal'}>{new Date(addedOn).toUTCString().slice(0, 16)}</Th>

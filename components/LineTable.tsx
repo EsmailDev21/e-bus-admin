@@ -32,7 +32,7 @@ const LineTable: React.FC<LineTableProps> = ({ lines, setLines }) => {
       <Table variant={"striped"} colorScheme={"purple"}>
         <Thead>
           <Tr>
-          <Th>Id</Th>
+          <Th>Label</Th>
             <Th>Departure Station</Th>
             <Th>Arrive Station</Th>
             <Th>Added on</Th>
@@ -44,6 +44,7 @@ const LineTable: React.FC<LineTableProps> = ({ lines, setLines }) => {
           {lines &&
             lines.map((line: Line) => (
               <SingleLine
+              label={line.label}
                 deleteLine={function (id: string): void {
                   deleteLine(line.id)
                 }}
@@ -59,7 +60,7 @@ const LineTable: React.FC<LineTableProps> = ({ lines, setLines }) => {
         </Tbody>
         <Tfoot>
           <Tr>
-          <Th>Id</Th>
+          <Th>Label</Th>
             <Th>Departure Station</Th>
             <Th>Arrive Station</Th>
             <Th>Added on</Th>
