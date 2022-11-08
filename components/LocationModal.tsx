@@ -24,7 +24,7 @@ const LocationModal:React.FC<LocationModalProps> = ({lon,lat}) => {
     }, [])
   return (
     
-    <><Button onClick={onOpen}>{"{Longitude : " + lat + ", Latitude : " + lon + "}"}</Button><Modal isOpen={isOpen} onClose={onClose}>
+    <><Button onClick={onOpen}>{"{Longitude : " + lon + ", Latitude : " + lat + "}"}</Button><Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent>
               <ModalHeader>{adress}</ModalHeader>
@@ -32,11 +32,11 @@ const LocationModal:React.FC<LocationModalProps> = ({lon,lat}) => {
               <ModalBody>
                   <Map
                       height={300}
-                      defaultCenter={[lon, lat]}
+                      defaultCenter={[lat, lon]}
                       defaultZoom={11}
                   >
 
-                      <Marker color='#9F7AEA' width={50} anchor={[lon, lat]} />
+                      <Marker color='#9F7AEA' width={50} anchor={[lat, lon]} />
 
                   </Map>
               </ModalBody>
