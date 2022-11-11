@@ -17,7 +17,7 @@ const LocationModal:React.FC<LocationModalProps> = ({lon,lat}) => {
     React.useEffect(() => {
         const abortController = new AbortController();
         
-        geoLocationHandler.getAdressFromLocation(lon,lat).then(res=>console.log(setadress(res.data.display_name)))
+       // geoLocationHandler.getAdressFromLocation(lon,lat).then(res=>console.log(setadress(res.data)))
       return () => {
         abortController.abort();
       }

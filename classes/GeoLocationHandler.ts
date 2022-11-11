@@ -10,7 +10,7 @@ export class GeoLocationHandler{
     }
 
     async getAdressFromLocation(lon:number,lat:number){
-        return await axios.get(`https://eu1.locationiq.com/v1/reverse?key=${this.access_token}&lat=${lat.toString()}&lon=${lon.toString()}&format=json`)
+        return await axios.get(`https://api.geoapify.com/v1/geocode/reverse?lat=${lat.toString()}&lon=${lon.toString()}&format=json&apiKey=8caca332f2584c7d9fe6c9451d54e2d1`)
         
     }
     async getPathBetweenLocations(stops:string) {

@@ -68,6 +68,7 @@ console.log(station)
   return (
     <>
       <Button
+      borderRadius={9999}
         w={"fit-content"}
         leftIcon={<BsPlus size={24} />}
         colorScheme="purple"
@@ -105,12 +106,15 @@ console.log(station)
                   {({ isOpen }) => (
                     <>
                       <MenuButton
-                        color={"purple.100"}
+                        color={"white"}
                         isActive={isOpen}
                         as={Button}
                         bg={"purple.400"}
                         _hover={{ bg: "purple.300" }}
-                        rightIcon={<BsChevronDown size={18} />}
+                        rightIcon={<BsChevronDown size={18}
+                        
+                        />}
+                        borderRadius={9999}
                       >
                         {(selectedDepStation.id != "") ? selectedDepStation.label : "Open" }
                       </MenuButton>
@@ -131,7 +135,8 @@ console.log(station)
                   {({ isOpen }) => (
                     <>
                       <MenuButton
-                        color={"purple.100"}
+                      borderRadius={9999}
+                        color={"white"}
                         isActive={isOpen}
                         as={Button}
                         bg={"purple.400"}
@@ -160,10 +165,11 @@ console.log(station)
                 colorScheme="purple"
                 mr={3}
                 onClick={onClose}
+                borderRadius={9999}
               >
                 Save
               </Button>
-              <Button leftIcon={<BsX size={24} />} onClick={onClose}>
+              <Button leftIcon={<BsX size={24} />} borderRadius={9999} onClick={onClose}>
                 Cancel
               </Button>
             </ModalFooter>

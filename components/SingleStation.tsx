@@ -8,6 +8,7 @@ import { StationDataServer } from '../classes/StationDataServer'
 import { LocationDataServer } from '../classes/LocationDataServer'
 import { GeoLocationHandler } from '../classes/GeoLocationHandler'
 import LocationModal from './LocationModal'
+import { LineDataServer } from '../classes/LineDataServer'
 
 interface SingleStationProps extends Station{
     deleteStation:(id:string)=>void,
@@ -23,19 +24,22 @@ locationId,
     const [location, setLocation] = React.useState<Location>({
         id:"",latitude:0,longitude:0
     })
-    const [adress, setadress] = React.useState()
-    
     
     const locationDataServer = new LocationDataServer();
     const getLocation = async (id:string) => {
         const data = await locationDataServer.getSingle("location/"+id);
+        
+
         setLocation(data);
     }
+    
+    
     
     React.useEffect(() => {
         const abortController = new AbortController();
         
         getLocation(locationId);
+        
         //geoLocationHandler.getAdressFromLocation(location.longitude,location.latitude).then(res=>console.log(setadress(res.data.display_name)))
       return () => {
         abortController.abort();

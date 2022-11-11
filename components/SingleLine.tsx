@@ -1,4 +1,4 @@
-import { Th, Tr , Stack, IconButton,Text,useDisclosure} from '@chakra-ui/react'
+import { Th, Tr , Stack, IconButton,Text,useDisclosure, Spinner, Skeleton, Box, SkeletonCircle} from '@chakra-ui/react'
 import React from 'react'
 import User from '../classes/User'
 import {BsPencilSquare, BsPersonX, BsX} from 'react-icons/bs'
@@ -9,6 +9,10 @@ import { StationDataServer } from '../classes/StationDataServer'
 import { GeoLocationHandler } from '../classes/GeoLocationHandler'
 import { LocationDataServer } from '../classes/LocationDataServer'
 import PathModal from './PathModal'
+import { useAppSelector } from '../redux/hooks'
+import { selectLine } from '../redux/linesSlice'
+import { LineDataServer } from '../classes/LineDataServer'
+import axios from 'axios'
 
 interface SingleLineProps extends Line{
     deleteLine:(id:string)=>void,
@@ -23,49 +27,53 @@ const SingleLine:React.FC<SingleLineProps > = ({
     updateLine,
     deleteLine,
 }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure()
     const [departureStation, setDepartureStation] = React.useState<Station>({
         id:"",label:"",locationId:""
     })
     const [arriveStation, setArriveStation] = React.useState<Station>({
         id:"",label:"",locationId:""
     })
-    const [depLocation, setdepLocation] = React.useState<Location>({id:"",latitude:0,longitude:0})
-    const [arrLocation, setarrpLocation] = React.useState<Location>({id:"",latitude:0,longitude:0})
+    const [coords, setCoords] = React.useState([])
+    const [route,setRoute] = React.useState<Location[]>([])
+    const [loading,setLoading] = React.useState(true)
+    const lineDataServer = new LineDataServer();
+    const linesLocations = useAppSelector(selectLine);
     const stationDataServer = new StationDataServer();
-    const geoLocationHandler = new GeoLocationHandler();
-    const locationDataServer = new LocationDataServer();
     const getDepartureStation = async (id:string) => {
         const data = await stationDataServer.getSingle("station/"+id);
         setDepartureStation(data);
     }
-    const getDepartureStationLocation = async (id:string) => {
-      const data = await locationDataServer.getSingle("location/"+id)
-      setdepLocation(data);
-  }
+    
     const getArriveStation = async (id:string) => {
         const data = await stationDataServer.getSingle("station/"+id);
         setArriveStation(data);
     }
-    const getArriveStationLocation = async (id:string) => {
-      const data = await locationDataServer.getSingle("location/"+id);
-      setarrpLocation(data);
-  }
+    const getRoute = async (id:string) => {
+      return await lineDataServer.getRoute("line/route/"+id);
+      
+    }
+   
     React.useEffect(() => {
         const abortController = new AbortController();
         getDepartureStation(departureStationId);
         getArriveStation(arriveStationId);
-        setTimeout(
-          ()=>{
-            getArriveStationLocation(arriveStation.locationId)
-        getDepartureStationLocation(departureStation.locationId)
-        console.log({depLocation,arrLocation})
-          },2000
+        getRoute(id).then(
+          res=>{
+
+            axios.get(`https://api.geoapify.com/v1/routing?waypoints=${res[0].latitude},${res[0].longitude}|${res[1].latitude},${res[1].longitude}&mode=drive&apiKey=8caca332f2584c7d9fe6c9451d54e2d1`).then(function (response) {
+            
+            setCoords(response.data.features[0].geometry.coordinates)
+            setLoading(false)
+            console.log(coords)
+        }).catch(function (error) {
+            console.error(error);
+        });
+          }
         )
-             return () => {
-        abortController.abort();
-      }
-    }, [arriveStationId,departureStationId])
+        return () => {
+          abortController.abort()
+        }
+    }, [departureStationId,arriveStationId,id])
     
   return (
   <> <Tr key={id}>
@@ -86,8 +94,9 @@ const SingleLine:React.FC<SingleLineProps > = ({
             colorScheme='gray'
             aria-label={`Update`}
             icon={<BsPencilSquare />} />
+             { loading===true? <Spinner size='sm' color='purple.400' /> : <PathModal   coords={coords[0]} />}
              </Stack>
-          <PathModal start={{lat:depLocation.latitude,lon:depLocation.longitude}} end={{lat:arrLocation.latitude,lon:arrLocation.longitude}} />
+        
  
        
         </Stack>
