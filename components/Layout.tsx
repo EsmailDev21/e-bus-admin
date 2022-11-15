@@ -32,8 +32,9 @@ import {
   FiBell,
   FiChevronDown,
 } from 'react-icons/fi';
+import {IoMdBus} from 'react-icons/io'
 import {BsPeople,BsShopWindow} from 'react-icons/bs'
-import {GiRoad} from 'react-icons/gi'
+import {GiPathDistance, GiRoad} from 'react-icons/gi'
 import { IconType } from 'react-icons';
 import { ReactText } from 'react';
 
@@ -44,9 +45,10 @@ interface LinkItemProps {
 }
 const LinkItems: Array<LinkItemProps> = [
   { name: 'Users', icon: BsPeople, href:'/dashboard/users' },
-  { name: 'Lines', icon: GiRoad, href:'/dashboard/lines' },
+  { name: 'Lines', icon: GiPathDistance, href:'/dashboard/lines' },
   { name: 'Stations', icon: BsShopWindow, href:'/dashboard/stations' },
-  { name: 'Voyages', icon: FiStar, href:'/dashboard/voyages' },
+  { name: 'Voyages', icon: GiRoad, href:'/dashboard/voyages' },
+  { name: 'Bus list', icon: IoMdBus, href:'/dashboard/buses' },
   { name: 'Settings', icon: FiSettings, href:'/dashboard/settings' },
 ];
 

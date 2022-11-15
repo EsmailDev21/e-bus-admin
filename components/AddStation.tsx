@@ -73,6 +73,7 @@ const AddStation: React.FC<AddStationProps> = ({ initialLocation,setStations,sta
         leftIcon={<BsPlus size={24} />}
         colorScheme="purple"
         onClick={onOpen}
+        borderRadius={9999}
       >
         Add Station
       </Button>
@@ -118,7 +119,7 @@ const AddStation: React.FC<AddStationProps> = ({ initialLocation,setStations,sta
                   
                 </Draggable>
               </Map>
-              <Button onClick={()=>{
+              <Button borderRadius={9999} onClick={()=>{
                 setFinalLocation(anchor);
                 handleAddLocation(finalLocation[0],finalLocation[1])
             }}  float={"right"} bg={"#00ff84"} _hover={{bg:"#42ffa4"}} leftIcon={<BsCheck2 size={24} />}>Set location</Button>
@@ -127,10 +128,10 @@ const AddStation: React.FC<AddStationProps> = ({ initialLocation,setStations,sta
           </ModalBody>
 
           <ModalFooter>
-            <Button type="submit" leftIcon={<BsPlus size={24} />} colorScheme="purple" mr={3}>
+            <Button borderRadius={9999} type="submit" leftIcon={<BsPlus size={24} />} colorScheme="purple" mr={3}>
               Save
             </Button>
-            <Button leftIcon={<BsX size={24} />} onClick={onClose}>
+            <Button borderRadius={9999} leftIcon={<BsX size={24} />} onClick={onClose}>
               Cancel
             </Button>
           </ModalFooter>
