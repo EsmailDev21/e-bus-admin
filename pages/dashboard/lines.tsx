@@ -22,7 +22,9 @@ const lines = () => {
     const [loading,setLoading] = React.useState(true)
     const searchHandler = (lines:Line[],event:React.ChangeEvent<HTMLInputElement>) => {
       setQuery(event.target.value)
-      query != "" ? setLines(lines.filter(line=> line.label.includes(query))) : getData();
+       setLines(lines.filter(line=> line.label.includes(query)))
+      
+      // if(query.length===0) getData();
     }
     const getData = async () => {
         const data : Line[] = await lineDataServer.get("line");
@@ -33,16 +35,17 @@ const lines = () => {
       };
     React.useEffect(() => {
       const abortController = new AbortController()
+      if(query.length===0) 
         getData();
         
      
-    }, [])
+    }, [query])
 
   return (
     <Layout>
      
         <Stack direction={"column"} spacing={5}>
-          <Stack width={"50%"} direction={"row"}>
+          <Stack width={{md:"50%", base:"full"}} direction={"row"}>
           <AddLine lines={lines} setLines={setLines}  />
         <Search value={query} onChange={(event)=>searchHandler(lines,event)} onClick={()=>console.log("clicked")} />
        

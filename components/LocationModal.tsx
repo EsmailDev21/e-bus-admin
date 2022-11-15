@@ -8,10 +8,10 @@ import { GeoLocationHandler } from '../classes/GeoLocationHandler';
 
 interface LocationModalProps{
     lon:number,
-    lat:number
+    lat:number,
+    adress? : string
 }
-const LocationModal:React.FC<LocationModalProps> = ({lon,lat}) => {
-    const [adress, setadress] = React.useState("")
+const LocationModal:React.FC<LocationModalProps> = ({lon,lat,adress}) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const geoLocationHandler = new GeoLocationHandler();
     React.useEffect(() => {
@@ -24,7 +24,7 @@ const LocationModal:React.FC<LocationModalProps> = ({lon,lat}) => {
     }, [])
   return (
     
-    <><Button onClick={onOpen}>{"{Longitude : " + lon + ", Latitude : " + lat + "}"}</Button><Modal isOpen={isOpen} onClose={onClose}>
+    <><Button onClick={onOpen} >{adress}</Button><Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent>
               <ModalHeader>{adress}</ModalHeader>

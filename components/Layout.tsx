@@ -101,8 +101,8 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       h="full"
       {...rest}>
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-          Logo
+        <Text fontSize="2xl" color={"gray.600"} fontFamily="monospace" fontWeight="bold">
+        E-Bus Admin
         </Text>
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
@@ -180,9 +180,10 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       <Text
         display={{ base: 'flex', md: 'none' }}
         fontSize="2xl"
+        color={"gray.600"}
         fontFamily="monospace"
         fontWeight="bold">
-        Logo
+        E-Bus Admin
       </Text>
 
       <HStack spacing={{ base: '0', md: '6' }}>
@@ -201,16 +202,14 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               <HStack>
                 <Avatar
                   size={'sm'}
-                  src={
-                    'https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
-                  }
+                  src={'https://scontent.ftun9-1.fna.fbcdn.net/v/t39.30808-1/314361951_1129618694614817_7191717887935548975_n.jpg?stp=c0.0.240.240a_dst-jpg_p240x240&_nc_cat=111&ccb=1-7&_nc_sid=7206a8&_nc_ohc=LWBxDwyE30wAX-PVOq5&_nc_ht=scontent.ftun9-1.fna&oh=00_AfCuN72Uq3RFPk6agYO3G1v0mVNGmRSPpQp2ahvkYz92cA&oe=63793618'}
                 />
                 <VStack
                   display={{ base: 'none', md: 'flex' }}
                   alignItems="flex-start"
                   spacing="1px"
                   ml="2">
-                  <Text fontSize="sm">Justina Clark</Text>
+                  <Text fontSize="sm">Esmail Khorchani</Text>
                   <Text fontSize="xs" color="gray.600">
                     Admin
                   </Text>

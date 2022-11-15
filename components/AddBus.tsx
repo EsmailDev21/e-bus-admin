@@ -16,6 +16,9 @@ import {
     MenuItem,
     MenuList,
     Spinner,
+    Radio,
+    RadioGroup,
+    Stack,
   } from "@chakra-ui/react";
   import GoogleMapReact from "google-map-react";
   import React, { useState } from "react";
@@ -138,14 +141,13 @@ import { BusTypeDataServer } from "../classes/BusTypeDataServer";
               </FormControl>
               <FormControl isRequired>
                 <FormLabel>Current state</FormLabel>
-                <Input
-                  ref={initialRef}
-                  placeholder="Current state"
-                  focusBorderColor="purple.400"
-                  value={state}
-                  type={"text"}
-                  onChange={event=>setState(event.target.value)}
-                />
+                <RadioGroup colorScheme={"purple"} onChange={setState} value={state}>
+      <Stack direction='row'>
+        <Radio value='Active'>Active</Radio>
+        <Radio value='Inactive'>Inactive</Radio>
+        <Radio value='Down'>Down</Radio>
+      </Stack>
+    </RadioGroup>
               </FormControl>
               
               <FormControl isRequired>

@@ -24,13 +24,16 @@ locationId,
     const [location, setLocation] = React.useState<Location>({
         id:"",latitude:0,longitude:0
     })
-    
+    const geoLocationHandler = new GeoLocationHandler();
+    const [adress, setAdress] = React.useState("")
     const locationDataServer = new LocationDataServer();
     const getLocation = async (id:string) => {
         const data = await locationDataServer.getSingle("location/"+id);
         
 
         setLocation(data);
+        geoLocationHandler.getAdressFromLocation(data.longitude,data.latitude).then((res)=>setAdress(res.data.results[0].formatted))
+
     }
     
     
@@ -54,7 +57,7 @@ locationId,
         <Th fontWeight={'normal'}>
 
           
-              <LocationModal lon={location.longitude} lat={location.latitude} />
+              <LocationModal adress={adress} lon={location.longitude} lat={location.latitude} />
 
 
         </Th>
