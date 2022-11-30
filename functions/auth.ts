@@ -11,7 +11,7 @@ export const useSigninHandler = async (event:React.FormEvent<HTMLFormElement>,ph
         password:password
     })
     .then(
-        res=> res.data.role!='ADMIN' ? router.push('/error') : router.push('/dashboard')
+        res=> res.data.roleId!='636c1d14402bfd3c6066ac07' ? router.push('/error') : router.push('/dashboard')
     )
     .catch(error => console.log(error))
 }
