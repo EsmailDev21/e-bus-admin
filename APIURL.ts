@@ -1,1 +1,1 @@
-export const APIURL:string = "https://ebus-serverside.herokuapp.com"
+export const APIURL:string = "https://localhost:4200"
